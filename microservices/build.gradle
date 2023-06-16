@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+
+}
+
+//Usado para aplicar configuracoes para todos os projetos inclusive o projeto PAI
+//allprojects {}
+
+//Usado para aplicar configuracoes para todos os projetos excluindo o projeto PAI
+subprojects {
+
+    //Nao funciona dentro de subprojects
+//    plugins {
+//        id 'java'
+//    }
+    apply plugin: 'java'
+    //apply plugin: 'application' //para que cada modulo seja executavel
+    apply plugin: 'org.springframework.boot' //version '3.1.0'
+    apply plugin: 'io.spring.dependency-management' //version '1.1.0'
+    apply plugin: 'java-library'
+
+
+    group = 'br.com.gsistemas'
+    version = '1.0-SNAPSHOT'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        testCompileOnly {
+            extendsFrom testAnnotationProcessor
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        compileOnly 'org.projectlombok:lombok'
+
+        annotationProcessor 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation platform('org.junit:junit-bom:5.9.1')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+//colocar isso dentro do build.gradle de cada modulo
+//project(":") {
+//    mainClassName = "NomeDaClasseApplication"
+//}

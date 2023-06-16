@@ -1,0 +1,12 @@
+# Ignore zip files
+*.zip
+
+# Ignore macOS files
+.DS_Store
+
+# Ignore folders IntelliJ
+.idea/
+
+# Ignore gradle files
+.gradle/
+
